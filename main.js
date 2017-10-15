@@ -1,49 +1,51 @@
 const app = new Vue({
     el:"#app",
-    data: { friends: [
-        "Fred",
-        "George",
-        "Samantha"
-    ],
-        bobby: {
-            first_name: "Bobby",
-            last_name: "Cunningham",
-            age: 35
-        },
-        john: {
-            name: "John",
-            age: 33
-        }
+    data: {
+        friends: [
+            {
+                firstName: "Bob",
+                lastName: "Goldstein",
+                age: 34
+            },
+            {
+                firstName: "Fred",
+                lastName: "Hendricks",
+                age: 22
+            },
+            {
+                firstName: "Jim",
+                lastName: "Jones",
+                age: 55
+            }
+        ]
     },
-    computed: {
-        full_name() {
-            return `${this.bobby.first_name} ${this.bobby.last_name}` 
+    filters: {
+        fullName(data) {
+            return `${data.firstName} ${data.lastName}`
         }
     },
     methods: {
-        korean_age: function (age) {
-            return age + 1;
+        incrementAge(friend) {
+            friend.age += 1;
+        },
+        decrementAge(friend) {
+            friend.age -= 1;
         }
     },
-    filters: {
-        full_name_filter(data) {
-            return `${data.first_name} ${data.last_name}`
-        }
-    },
-    template: `
-        <div>
-            <ul>
-                <li>
-                <h1>{{john.name}}</h1>
-                <h2>I am {{john.age}}</h2>
-                </li>
-                <li>
-                <h1>{{bobby | full_name_filter}}</h1>
-                <h2>I am {{korean_age(bobby.age)}}</h2>
-                </li>
-            </ul>
-        </div>
-    `
+    template: 
+`
+<div>
+    <h1 v-for="friend in friends">
+        <h2>{{friend | fullName}}</h2>
+        <h3>{{friend.age}}</h3>
+        <button v-on:click="incrementAge(friend)">+</button>
+        <button v-on:click="decrementAge(friend)">-</button>
+        <input v-model="friend.firstName"/>
+        <input v-model="friend.lastName"/>
+    </h1>
+</div>
+`
+
 });
 
 /**
