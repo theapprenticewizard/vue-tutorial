@@ -1,4 +1,4 @@
-Vue.component('friend', {
+Vue.component('friend-component', {
     props: ['friend'],
     filters: {
         fullName(data) {
@@ -50,7 +50,7 @@ const app = new Vue({
     template: 
 `
 <div>
-    <friend v-for="friend in friends" v-bind:friend="friend" />
+    <friend-component v-for="item in friends" v-bind:friend="item" />
 </div>
 `
 
